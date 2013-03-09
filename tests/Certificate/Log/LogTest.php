@@ -4,20 +4,17 @@ class LogTest extends PHPUnit_Framework_TestCase
 {
     public function testDbLogger()
     {
-        $log = new Zend_Log();
-        $dbWriter = new Zend_Log_Writer_Db(
-            Zend_Db::factory(
-                'PDO_SQLITE',
-                array(
-                    'dbname' => dirname(__FILE__) . '/../../../data/test.sqlite'
-                )
-            ),
-            'logs',
+        $databaseAdapter = Zend_Db::factory(
+            'PDO_SQLITE',
             array(
-                'message' => 'message'
+                'dbname' => dirname(__FILE__) . '/../../../data/test.sqlite'
             )
         );
-        $log->addWriter($dbWriter);
+        $databaseTableName = 'logs';
+        $columnMapping = array('message' => 'message');
+
+        $log = new Zend_Log();
+        $log->addWriter(new Zend_Log_Writer_Db($databaseAdapter, $databaseTableName, $columnMapping));
         $log->info('Info Message');
     }
 }
