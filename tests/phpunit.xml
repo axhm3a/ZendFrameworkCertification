@@ -20,7 +20,7 @@
          verbose="false">
 
   <testsuites>
-    <testsuite name="Zend_Db Testsuite">
+    <testsuite name="Zend Certificate Testsuite">
       <directory>./Certificate</directory>
     </testsuite>
   </testsuites>
