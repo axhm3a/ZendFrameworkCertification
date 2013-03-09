@@ -31,11 +31,11 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
 
     public function testZendDbFetchAll()
     {
-        $sql = 'SELECT * FROM `bugs`';
+        $sql    = 'SELECT * FROM `bugs`';
         $result = $this->getDbAdapter()->fetchAll($sql);
         $this->assertTrue(is_array($result));
 
-        $sql = 'SELECT * FROM `bugs` WHERE id = ?';
+        $sql    = 'SELECT * FROM `bugs` WHERE id = ?';
         $result = $this->getDbAdapter()->fetchAll($sql, 1);
         $this->assertEquals(1, $result[0]['id']);
     }
@@ -65,6 +65,17 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
             "SELECT * FROM bugs WHERE description = 'O''Reilly'",
             $this->getDbAdapter()->quoteInto("SELECT * FROM bugs WHERE description = ?", "O'Reilly")
         );
+    }
+
+    public function testQuery()
+    {
+        /** @var $statement Zend_Db_Statement */
+        $statement = $this->getDbAdapter()->query('SELECT * FROM bugs WHERE id = ?', array(1));
+        $this->assertInstanceOf('Zend_Db_Statement', $statement);
+        $result = $statement->execute();
+        $this->assertTrue($result);
+        $dbResult = $statement->fetchAll();
+        $this->assertTrue(is_array($dbResult));
     }
 
     /**
