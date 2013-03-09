@@ -40,9 +40,35 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $result[0]['id']);
     }
 
+    public function testInsert()
+    {
+        // will not insert here, just for demonstration
+
+        /*
+        $id = $this->getDbAdapter()->insert(
+            'bugs',
+            array(
+                'description' => 'random'
+            )
+        );*/
+    }
+
+    public function testQuote()
+    {
+        $name = $this->getDbAdapter()->quote("O'Reilly");
+        $this->assertEquals("'O''Reilly'", $name);
+    }
+
+    public function testQuoteInto()
+    {
+        $this->assertEquals(
+            "SELECT * FROM bugs WHERE description = 'O''Reilly'",
+            $this->getDbAdapter()->quoteInto("SELECT * FROM bugs WHERE description = ?", "O'Reilly")
+        );
+    }
 
     /**
-     * @return Zend_Db_Adapter_Abstract
+     * @return Zend_Db_Adapter_Pdo_Sqlite
      */
     public function getDbAdapter()
     {
