@@ -1,12 +1,7 @@
 <?php
 
-namespace Certificate\Db;
-
 class ZendDbTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * How to create a DbAdapter
-     */
     public function testInstantiateDbAdapter()
     {
         $adapter = \Zend_Db::factory(

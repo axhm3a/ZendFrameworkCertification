@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="true"
          backupStaticAttributes="false"
          bootstrap="./bootstrap.php"
@@ -19,8 +20,8 @@
          verbose="false">
 
   <testsuites>
-    <testsuite name="db">
-      <directory suffix="Test.php">./tests/Certificate/Db</directory>
+    <testsuite name="Zend_Db Testsuite">
+      <directory>./Certificate</directory>
     </testsuite>
   </testsuites>
 
