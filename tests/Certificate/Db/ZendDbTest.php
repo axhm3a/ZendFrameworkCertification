@@ -79,6 +79,18 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $dbResult[0]['id']);
     }
 
+    public function testSimpleFetch()
+    {
+        /** @var $statement Zend_Db_Statement */
+        $statement = $this->getDbAdapter()->query('SELECT * FROM bugs WHERE id = :id', array('id' => 1));
+        $this->assertInstanceOf('Zend_Db_Statement', $statement);
+        $statement->execute();
+
+        while ($row = $statement->fetch()) {
+            $this->assertEquals(1, $row['id']);
+        }
+    }
+
     /**
      * @return Zend_Db_Adapter_Pdo_Sqlite
      */
