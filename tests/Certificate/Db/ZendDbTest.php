@@ -29,4 +29,16 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
         $adapter = Zend_Db::factory($config->database);
         $this->assertInstanceOf('\Zend_Db_Adapter_Pdo_Sqlite', $adapter);
     }
+
+    public function testZendDbAdapterForcingConnection()
+    {
+        $adapter = \Zend_Db::factory(
+            'Pdo_Sqlite',
+            array(
+                'dbname' => dirname(__FILE__) . '/../../../data/test.sqlite'
+            )
+        );
+        $connection = $adapter->getConnection();
+        $this->assertInstanceOf('PDO', $connection);
+    }
 }
