@@ -91,6 +91,16 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testSelect()
+    {
+        $select = $this->getDbAdapter()->select()
+                                       ->from('bugs', array('id', 'description'))
+                                       ->where('description IS NOT NULL')
+                                       ->order('id');
+        $result = $this->getDbAdapter()->fetchAll($select);
+        $this->assertTrue(is_array($result));
+    }
+
     /**
      * @return Zend_Db_Adapter_Pdo_Sqlite
      */
