@@ -89,4 +89,12 @@ class ZendFilterTest extends PHPUnit_Framework_TestCase
         $filter->setTagsAllowed('a');
         $this->assertEquals('<a>link</a>', $filter->filter('<a onclick="javascript:alert(document.cookie)">link</a>'));
     }
+
+    public function testFilterChain()
+    {
+        $filterChain = new Zend_Filter();
+        $filterChain->addFilter(new Zend_Filter_Alnum(true))
+                    ->addFilter(new Zend_Filter_StringTrim());
+        $this->assertEquals('Hallo dies ist ein Test 123', $filterChain->filter('  ((((Hallo dies ist ein Test 123! '));
+    }
 }
