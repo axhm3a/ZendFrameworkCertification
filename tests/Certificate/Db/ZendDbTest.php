@@ -70,12 +70,13 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
     public function testQuery()
     {
         /** @var $statement Zend_Db_Statement */
-        $statement = $this->getDbAdapter()->query('SELECT * FROM bugs WHERE id = ?', array(1));
+        $statement = $this->getDbAdapter()->query('SELECT * FROM bugs WHERE id = :id', array('id' => 1));
         $this->assertInstanceOf('Zend_Db_Statement', $statement);
         $result = $statement->execute();
         $this->assertTrue($result);
         $dbResult = $statement->fetchAll();
         $this->assertTrue(is_array($dbResult));
+        $this->assertEquals(1, $dbResult[0]['id']);
     }
 
     /**
