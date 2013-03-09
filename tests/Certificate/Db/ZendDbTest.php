@@ -101,6 +101,25 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
     }
 
+    public function testDbTableAndTableRowset()
+    {
+        // Bug extends Zend_Db_Table which implements the Table Data Gateway Pattern
+        $bug = new Bugs($this->getDbAdapter());
+
+        // fetchAll returns a Zend_Db_Table_Rowset which implements the Row Data Gateway Pattern
+        /** @var $allBugs Zend_Db_Table_Rowset */
+        $allBugs = $bug->fetchAll();
+
+        $this->assertInstanceOf('Zend_Db_Table_Rowset', $allBugs);
+
+        /** @var $aBug Zend_Db_Table_Row */
+        foreach ($allBugs as $aBug) {
+            $this->assertInstanceOf('Zend_Db_Table_Row', $aBug);
+            $aBugAsArray = $aBug->toArray();
+            $this->assertTrue((int)($aBugAsArray['id']) == $aBugAsArray['id']);
+        }
+    }
+
     /**
      * @return Zend_Db_Adapter_Pdo_Sqlite
      */
@@ -113,4 +132,9 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+}
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs';
 }
