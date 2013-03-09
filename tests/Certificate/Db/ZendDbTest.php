@@ -4,13 +4,7 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
 {
     public function testInstantiateDbAdapter()
     {
-        $adapter = \Zend_Db::factory(
-            'Pdo_Sqlite',
-            array(
-                'dbname' => dirname(__FILE__) . '/../../../data/test.sqlite'
-            )
-        );
-        $this->assertInstanceOf('\Zend_Db_Adapter_Pdo_Sqlite', $adapter);
+        $this->assertInstanceOf('\Zend_Db_Adapter_Pdo_Sqlite', $this->getDbAdapter());
     }
 
     public function testZendDbFactoryWithZendConfig()
@@ -32,13 +26,31 @@ class ZendDbTest extends \PHPUnit_Framework_TestCase
 
     public function testZendDbAdapterForcingConnection()
     {
-        $adapter = \Zend_Db::factory(
+        $this->assertInstanceOf('PDO', $this->getDbAdapter()->getConnection());
+    }
+
+    public function testZendDbFetchAll()
+    {
+        $sql = 'SELECT * FROM `bugs`';
+        $result = $this->getDbAdapter()->fetchAll($sql);
+        $this->assertTrue(is_array($result));
+
+        $sql = 'SELECT * FROM `bugs` WHERE id = ?';
+        $result = $this->getDbAdapter()->fetchAll($sql, 1);
+        $this->assertEquals(1, $result[0]['id']);
+    }
+
+
+    /**
+     * @return Zend_Db_Adapter_Abstract
+     */
+    public function getDbAdapter()
+    {
+        return \Zend_Db::factory(
             'Pdo_Sqlite',
             array(
                 'dbname' => dirname(__FILE__) . '/../../../data/test.sqlite'
             )
         );
-        $connection = $adapter->getConnection();
-        $this->assertInstanceOf('PDO', $connection);
     }
 }
