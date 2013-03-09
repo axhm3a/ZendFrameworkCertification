@@ -39,5 +39,6 @@ class ZendAuthTest extends PHPUnit_Framework_TestCase
         $result = $auth->authenticate($authAdapter);
 
         $this->assertEquals(Zend_Auth_Result::SUCCESS, $result->getCode());
+        $this->assertEquals('cbergau', $result->getIdentity());
     }
 }
