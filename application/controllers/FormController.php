@@ -10,11 +10,11 @@ class FormController extends Zend_Controller_Action
 {
     public function simpleAction()
     {
+        // Override validation message templates
         $translate = new Zend_Translate('Zend_Translate_Adapter_Array', array(
-            Zend_Validate_Alnum::NOT_ALNUM => 'Das Feld darf nur aus Buchstaben und Zahlen bestehen',
+            Zend_Validate_Alnum::NOT_ALNUM   => 'Das Feld darf nur aus Buchstaben und Zahlen bestehen',
             Zend_Validate_NotEmpty::IS_EMPTY => 'Bitte fuellen Sie dieses Feld aus'
         ));
-
         Zend_Validate_Abstract::setDefaultTranslator($translate);
 
         // Not best practise putting this all here, just for demonstration purpose
@@ -47,7 +47,7 @@ class FormController extends Zend_Controller_Action
         $form->addElement('Submit', 'submit', array());
 
         if ($form->isValid($_POST)) {
-
+            // ...
         }
         $this->view->assign('form', $form);
     }
