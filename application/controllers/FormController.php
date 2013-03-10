@@ -10,6 +10,12 @@ class FormController extends Zend_Controller_Action
 {
     public function simpleAction()
     {
+        $translate = new Zend_Translate('Zend_Translate_Adapter_Array', array(
+            Zend_Validate_Alnum::NOT_ALNUM => 'Das Feld darf nur aus Buchstaben und Zahlen bestehen'
+        ));
+
+        Zend_Validate_Abstract::setDefaultTranslator($translate);
+
         // Not best practise putting this all here, just for demonstration purpose
         $form = new Zend_Form();
         $form->setMethod('post');
