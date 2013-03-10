@@ -37,8 +37,23 @@ class FormController extends Zend_Controller_Action
             )
         );
 
+        // Adding a subform
+        $subForm = new Zend_Form_SubForm();
+        $subForm->setLegend('Subform');
+        $subForm->addElement(
+            'Text',
+            'lastName',
+            array(
+                'label'      => 'LastName Name:',
+                'required'   => true,
+                'validators' => array('alnum')
+            )
+        );
+        $form->addSubForm($subForm, 'subformName');
+
         // Adding an element with config
         $form->addElement('Submit', 'submit', array());
+
 
         if ($form->isValid($_POST)) {
             // ...
