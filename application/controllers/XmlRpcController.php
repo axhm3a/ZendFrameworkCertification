@@ -6,7 +6,6 @@ class XmlRpcController extends Zend_Controller_Action
     {
         $server = new Zend_XmlRpc_Server();
         $server->setClass('Md5Service');
-        #$server->addFunction('encrypt');
         echo $server->handle();
     }
 
