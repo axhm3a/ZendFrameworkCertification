@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Christian
- * Date: 10.03.13
- * Time: 18:50
- * To change this template use File | Settings | File Templates.
- */
+
 class FormController extends Zend_Controller_Action
 {
     public function simpleAction()
