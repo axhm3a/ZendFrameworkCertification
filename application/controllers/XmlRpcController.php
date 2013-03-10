@@ -12,13 +12,7 @@ class XmlRpcController extends Zend_Controller_Action
     public function clientAction()
     {
         $client = new Zend_XmlRpc_Client('http://localhost/ZendFrameworkCertification/public/xmlrpc/server');
-
-        try {
-            $this->view->assign('serverResponse', $client->call('encrypt', 'test'));
-        } catch (Zend_Exception $exception) {
-            var_dump($client->getLastRequest());
-            var_dump($exception->getMessage());
-        }
+        $this->view->assign('serverResponse', $client->call('encrypt', 'test'));
     }
 }
 
