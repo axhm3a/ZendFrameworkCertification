@@ -31,6 +31,11 @@ class FormController extends Zend_Controller_Action
         // Add custom Validator
         $username->addPrefixPath('Cert_Validate', 'Cert/Validate/', 'validate');
         $username->addValidator('test'); // Loads Cert_Validate_Test
+
+        // Add custom Decorator
+        $username->addPrefixPath('Cert_Decorator', 'Cert/Decorator/', 'decorator');
+        $username->addDecorator('test');
+
         $form->addElement($username);
 
         // Adding an element with config
