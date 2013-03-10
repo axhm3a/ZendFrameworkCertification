@@ -4,6 +4,8 @@ class FormController extends Zend_Controller_Action
 {
     public function simpleAction()
     {
+        Zend_Layout::startMvc();
+
         // Override validation message templates
         $translate = new Zend_Translate('Zend_Translate_Adapter_Array', array(
             Zend_Validate_Alnum::NOT_ALNUM   => 'Das Feld darf nur aus Buchstaben und Zahlen bestehen',
@@ -46,7 +48,9 @@ class FormController extends Zend_Controller_Action
             array(
                 'label'      => 'LastName Name:',
                 'required'   => true,
-                'validators' => array('alnum')
+                'validators' => array(
+                    array('alnum')
+                )
             )
         );
         $form->addSubForm($subForm, 'subformName');
@@ -55,7 +59,7 @@ class FormController extends Zend_Controller_Action
         $form->addElement('Submit', 'submit', array());
 
 
-        if ($form->isValid($_POST)) {
+        if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
             // ...
         }
         $this->view->assign('form', $form);

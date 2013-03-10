@@ -1,0 +1,19 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Zend Framework - Library</title>
+    <?= $this->headLink()->appendStylesheet(Zend_Controller_Front::getInstance()->getBaseUrl() . '/css/bootstrap.min.css')
+                         ->appendStylesheet(Zend_Controller_Front::getInstance()->getBaseUrl() . '/css/style.css');
+
+    ?>
+</head>
+<body>
+
+<div class="container">
+    <h1>Zend Framework Certification</h1>
+    <?php echo $this->layout()->content; ?>
+</div>
+
+</body>
+</html>
