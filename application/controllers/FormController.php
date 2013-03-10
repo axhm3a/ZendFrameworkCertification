@@ -21,11 +21,16 @@ class FormController extends Zend_Controller_Action
         $username = new Zend_Form_Element_Text('username');
         $username->setLabel('Username:');
         $username->setRequired(true);
+
         $username->addValidators(
             array(
                 new Zend_Validate_Alnum(),
             )
         );
+
+        // Add custom Validator
+        $username->addPrefixPath('Cert_Validate', 'Cert/Validate/', 'validate');
+        $username->addValidator('test'); // Loads Cert_Validate_Test
         $form->addElement($username);
 
         // Adding an element with config
@@ -59,8 +64,10 @@ class FormController extends Zend_Controller_Action
         $form->addElement('Submit', 'submit', array());
 
 
-        if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
-            // ...
+        if ($this->getRequest()->isPost()) {
+            if (!$form->isValid($_POST)) {
+                $this->view->allFormErrors = $form->getMessages();
+            }
         }
         $this->view->assign('form', $form);
     }
