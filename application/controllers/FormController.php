@@ -1,0 +1,47 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: Christian
+ * Date: 10.03.13
+ * Time: 18:50
+ * To change this template use File | Settings | File Templates.
+ */
+class FormController extends Zend_Controller_Action
+{
+    public function simpleAction()
+    {
+        // Not best practise putting this all here, just for demonstration purpose
+        $form = new Zend_Form();
+        $form->setMethod('post');
+
+        // Adding an element with objects
+        $username = new Zend_Form_Element_Text('username');
+        $username->setLabel('Username:');
+        $username->setRequired(true);
+        $username->addValidators(
+            array(
+                new Zend_Validate_Alnum(),
+            )
+        );
+        $form->addElement($username);
+
+        // Adding an element with config
+        $form->addElement(
+            'Text',
+            'firstname',
+            array(
+                'label'      => 'First Name:',
+                'required'   => true,
+                'validators' => array('alnum')
+            )
+        );
+
+        // Adding an element with config
+        $form->addElement('Submit', 'submit', array());
+
+        if ($form->isValid($_POST)) {
+
+        }
+        $this->view->assign('form', $form);
+    }
+}
